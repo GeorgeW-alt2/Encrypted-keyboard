@@ -120,7 +120,7 @@ void KbdRptParser::OnKeyPressed(uint8_t key)
 {
   //Serial.print("ASCII: ");
   
-  Serial.println(xorCryptString((char)key));
+  Serial.print(xorCryptString((char)key));
 };
 
 USB     Usb;
