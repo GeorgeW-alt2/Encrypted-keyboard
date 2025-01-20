@@ -9,13 +9,10 @@
 // XOR Encryption/Decryption Function for Arduino/C++
 
 // Simple XOR encryption key (can be changed)
-byte ENCRYPTION_KEY = 0x00;  // Example key, can be any byte value
+const int code_len = 8;
+static uint8_t encryptionKeyPos = 0;  // Position in encryption key
 
-// Function to XOR encrypt/decrypt a single character
-char xorCrypt(char input) {
-  return input ^ ENCRYPTION_KEY;
-}
-
+char ENCRYPTION_KEY[code_len];  // Example key, can be any byte value
 class KbdRptParser : public KeyboardReportParser
 {
     void PrintKey(uint8_t mod, uint8_t key);
@@ -78,14 +75,27 @@ void KbdRptParser::OnKeyUp(uint8_t mod, uint8_t key)
   //PrintKey(mod, key);
 }
 
+
 void KbdRptParser::OnKeyPressed(uint8_t key)
 {
-  //Serial.print("ASCII: ");
-  if (ENCRYPTION_KEY == 0x00){
-    ENCRYPTION_KEY = (byte)key;
+  static uint8_t keyIndex = 0;  // Track the number of keys collected
+  
+  // Collect encryption key
+  if (keyIndex < code_len) {
+    ENCRYPTION_KEY[keyIndex] = key;
+    keyIndex++;
   }
-  Serial.print((char)key ^ ENCRYPTION_KEY);
-};
+  
+  // When encryption key is complete, apply XOR encryption
+  if (keyIndex == code_len) {
+    // XOR the current key with the current position in encryption key
+    char encryptedChar = static_cast<char>(key) ^ ENCRYPTION_KEY[encryptionKeyPos];
+    
+    // Rotate to next position in encryption key
+    encryptionKeyPos = (encryptionKeyPos + 1) % code_len;
+    Serial.print(encryptedChar, HEX);
+  }
+}
 
 USB     Usb;
 //USBHub     Hub(&Usb);
@@ -113,4 +123,3 @@ void loop()
 {
   Usb.Task();
 }
-
