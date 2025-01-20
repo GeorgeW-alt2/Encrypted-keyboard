@@ -9,7 +9,7 @@
 // XOR Encryption/Decryption Function for Arduino/C++
 
 // Simple XOR encryption key (can be changed)
-const byte ENCRYPTION_KEY = 0x55;  // Example key, can be any byte value
+byte ENCRYPTION_KEY = 0x00;  // Example key, can be any byte value
 
 // Function to XOR encrypt/decrypt a single character
 char xorCrypt(char input) {
@@ -81,7 +81,9 @@ void KbdRptParser::OnKeyUp(uint8_t mod, uint8_t key)
 void KbdRptParser::OnKeyPressed(uint8_t key)
 {
   //Serial.print("ASCII: ");
-  
+  if (ENCRYPTION_KEY == 0x00){
+    ENCRYPTION_KEY = (byte)key;
+  }
   Serial.print((char)key ^ ENCRYPTION_KEY);
 };
 
