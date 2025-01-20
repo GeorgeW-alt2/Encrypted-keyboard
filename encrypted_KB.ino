@@ -70,29 +70,6 @@ void KbdRptParser::OnControlKeysChanged(uint8_t before, uint8_t after) {
   if (beforeMod.bmLeftCtrl != afterMod.bmLeftCtrl) {
     Serial.println("LeftCtrl changed");
   }
-  if (beforeMod.bmLeftShift != afterMod.bmLeftShift) {
-    Serial.println("LeftShift changed");
-  }
-  if (beforeMod.bmLeftAlt != afterMod.bmLeftAlt) {
-    Serial.println("LeftAlt changed");
-  }
-  if (beforeMod.bmLeftGUI != afterMod.bmLeftGUI) {
-    Serial.println("LeftGUI changed");
-  }
-
-  if (beforeMod.bmRightCtrl != afterMod.bmRightCtrl) {
-    Serial.println("RightCtrl changed");
-  }
-  if (beforeMod.bmRightShift != afterMod.bmRightShift) {
-    Serial.println("RightShift changed");
-  }
-  if (beforeMod.bmRightAlt != afterMod.bmRightAlt) {
-    Serial.println("RightAlt changed");
-  }
-  if (beforeMod.bmRightGUI != afterMod.bmRightGUI) {
-    Serial.println("RightGUI changed");
-  }
-
 }
 
 void KbdRptParser::OnKeyUp(uint8_t mod, uint8_t key)
