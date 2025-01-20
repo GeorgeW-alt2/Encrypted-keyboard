@@ -81,13 +81,13 @@ void KbdRptParser::OnKeyPressed(uint8_t key)
   static uint8_t keyIndex = 0;  // Track the number of keys collected
   
   // Collect encryption key
-  if (keyIndex < code_len) {
+  if (keyIndex < code_len+1) {
     ENCRYPTION_KEY[keyIndex] = key;
     keyIndex++;
   }
   
   // When encryption key is complete, apply XOR encryption
-  if (keyIndex == code_len) {
+  if (keyIndex == code_len+1) {
     // XOR the current key with the current position in encryption key
     char encryptedChar = static_cast<char>(key) ^ ENCRYPTION_KEY[encryptionKeyPos];
     
