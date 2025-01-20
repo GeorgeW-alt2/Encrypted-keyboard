@@ -16,21 +16,6 @@ char xorCrypt(char input) {
   return input ^ ENCRYPTION_KEY;
 }
 
-// Function to XOR encrypt/decrypt an entire string
-char xorCryptString(char* str) {
-  int i = 0;
-  while (str[i] != '\0') {
-    str[i] = xorCrypt(str[i]);
-    i++;
-  }
-}
-
-// Alternative function for encrypting/decrypting byte arrays
-void xorCryptBytes(byte* data, int length) {
-  for (int i = 0; i < length; i++) {
-    data[i] ^= ENCRYPTION_KEY;
-  }
-}
 class KbdRptParser : public KeyboardReportParser
 {
     void PrintKey(uint8_t mod, uint8_t key);
@@ -120,7 +105,7 @@ void KbdRptParser::OnKeyPressed(uint8_t key)
 {
   //Serial.print("ASCII: ");
   
-  Serial.print(xorCryptString((char)key));
+  Serial.print((char)key ^ ENCRYPTION_KEY);
 };
 
 USB     Usb;
